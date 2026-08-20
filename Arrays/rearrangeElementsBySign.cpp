@@ -30,6 +30,38 @@ vector<int> rearrangeElementsOptimal(vector<int>& arr, int n) {
     }
     return ans;
 }
+
+// pos and neq are not equal
+vector<int> rearrangeElements(vector<int>& arr, int n) {
+    vector<int> pos, neg;
+    for(int i = 0; i < n; i++) {
+        if(arr[i] > 0) pos.push_back(arr[i]);
+        else neg.push_back(arr[i]);
+    }
+    if(pos.size() > neg.size()) {
+        for(int i = 0; i < neg.size(); i++) {
+            arr[2 * i] = pos[i];
+            arr[2 * i + 1] = neg[i];
+        }
+        int index = neg.size() * 2;
+        for(int i = neg.size(); i < pos.size(); i++) {
+            arr[index] = pos[i];
+            index++;
+        }
+    }
+    else {
+        for(int i = 0; i < pos.size(); i++) {
+            arr[2 * i] = pos[i];
+            arr[2 * i + 1] = neg[i];
+        }
+        int index = pos.size() * 2;
+        for(int i = pos.size(); i < neg.size(); i++) {
+            arr[index] = neg[i];
+            index++;
+        }
+    }
+    return arr;
+}
 int main(){
     int n;
     cout << "Enter n: ";
@@ -37,7 +69,7 @@ int main(){
     vector<int> arr(n);
     cout << "Enter array elements: ";
     for(int i = 0; i < n; i++) cin >> arr[i];
-    vector<int> ans = rearrangeElementsOptimal(arr, n);
+    vector<int> ans = rearrangeElements(arr, n);
     for(auto x : ans) cout << x << " ";
     return 0;
 }
