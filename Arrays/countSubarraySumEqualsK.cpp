@@ -25,6 +25,19 @@ int countSubarrayBetter(vector<int>& arr, int n, int target) {
     return cnt;
 }
 
+int countSubarrayOptimal(vector<int>& arr, int n, int target) {
+    unordered_map<int, int> mpp;
+    mpp[0] = 1;
+    int preSum = 0, cnt = 0;
+    for(int i = 0; i < n; i++) {
+        preSum += arr[i];
+        int remove = preSum - target;
+        cnt += mpp[remove];
+        mpp[preSum] += 1;
+    }
+    return cnt;
+}
+
 int main(){
     int n, target;
     cout << "Enter n and target: ";
@@ -32,6 +45,6 @@ int main(){
     vector<int> arr(n);
     cout << "Enter array elements: ";
     for(int i = 0; i < n; i++) cin >> arr[i];
-    cout << countSubarrayBrute(arr, n, target);
+    cout << countSubarrayOptimal(arr, n, target);
     return 0;
 }
